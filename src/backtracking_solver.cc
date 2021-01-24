@@ -1,5 +1,4 @@
 #include <numeric>
-#include <thread>
 
 #include "parser.h"
 #include "sudoku.h"
@@ -36,10 +35,12 @@ bool solve(su::Board& board) {
   return false;
 }
 
-int main(void) {
-  int n = 1;
-  auto curr_path = std::filesystem::current_path();
-  auto file_path = curr_path.parent_path() / "test" / "sudoku_input_1.txt";
+int main(int argc, char** argv) {
+  std::filesystem::path file_path;
+  if (argc < 2) {
+    std::cout << "Usage: backtracking_solver /absolute/file_path.txt\n";
+    return 1;
+  }
 
   su::Board board = su::readFile(file_path);
   std::cout << board;
