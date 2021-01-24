@@ -31,6 +31,8 @@ TEST(Sudoku, ValidInRowCol) {
   row_idx = col_idx = 4;
   ASSERT_FALSE(isValidInSquare(board, row_idx, col_idx, 8));
   ASSERT_TRUE(isValidInSquare(board, row_idx, col_idx, 5));
+
+  ASSERT_FALSE(isBoardComplete(board));
 }
 }  // namespace su
 

@@ -56,4 +56,15 @@ bool isValidInSquare(const su::Board& board, const std::size_t row_idx, const st
   return isValidInRow(board_col, val);
 }
 
+bool isBoardComplete(su::Board& board) {
+  for (const auto& board_row : board) {
+    for (const auto val : board_row) {
+      if (val == 0) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 }  // namespace su
