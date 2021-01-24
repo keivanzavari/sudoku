@@ -1,8 +1,13 @@
+#pragma once
+
 #include <algorithm>
 #include <iostream>
+#include <thread>
 
 #include "parser.h"
 #include "types.h"
+
+namespace su {
 
 bool isValidInRow(const su::BoardRow& board_row, const int val) {
   auto res = std::find(board_row.begin(), board_row.end(), val);
@@ -45,28 +50,7 @@ su::BoardRow getSquareInRowFormat(const su::Board& board, const std::size_t row_
 
 bool isValidInSquare(const su::Board& board, const std::size_t row_idx, const std::size_t col_idx, const int val) {
   const auto board_col = getSquareInRowFormat(board, row_idx, col_idx);
-  std::cout << "SQUARE: " << board_col << "\n";
   return isValidInRow(board_col, val);
 }
 
-void sudoku_solve(const su::Board& board) {
-  // your logic here
-  std::cout << board;
-}
-
-int main(void) {
-  int n = 1;
-  su::Board board;
-  su::readFile("/home/keivan/playground/sudoku/sudoku_input_2.txt");
-
-  // std::cout << "9 valid in row 2 " << isValidInRow(board[2], 9) << "\n";
-  // std::cout << "5 valid in row 2 " << isValidInRow(board[2], 5) << "\n";
-  // std::cout << "3 valid in row 1 " << isValidInRow(board[1], 3) << "\n";
-  // std::cout << "5 valid in col 3 " << isValidInCol(board, 3, 5) << "\n";
-  // std::cout << "8 valid in col 3 " << isValidInCol(board, 3, 8) << "\n";
-
-  // std::cout << "8 valid in sq 4,4 " << isValidInSquare(board, 4, 4, 8) << "\n";
-  // std::cout << "5 valid in sq 4,4 " << isValidInSquare(board, 4, 4, 5) << "\n";
-  sudoku_solve(board);
-  return 0;
-}
+}  // namespace su
