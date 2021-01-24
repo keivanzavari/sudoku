@@ -16,6 +16,10 @@ bool isValidInRow(const su::BoardRow& board_row, const int val) {
   return false;
 }
 
+bool isValidInRow(const su::Board& board, const std::size_t row_idx, const int val) {
+  return isValidInRow(board[row_idx], val);
+}
+
 su::BoardRow getColInRowFormat(const su::Board& board, const std::size_t col_idx) {
   su::BoardRow board_row;
   for (std::size_t idx = 0; idx < su::SIZE; ++idx) {
