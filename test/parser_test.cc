@@ -3,19 +3,13 @@
 #include <gtest/gtest.h>
 
 #include <algorithm>
+#include <numeric>
 #include <string>
 #include <vector>
 
 #include "gmock/gmock.h"
 
 namespace su {
-template <class ForwardIt, class T>
-constexpr void iota(ForwardIt first, ForwardIt last, T value) {
-  while (first != last) {
-    *first++ = value;
-    ++value;
-  }
-}
 
 TEST(String, Split) {
   std::vector<std::string> numbers{"1", "2", "3", "4", "5", "6", "7", "8", "9"};
@@ -28,7 +22,7 @@ TEST(String, Split) {
 
 TEST(SudokuTest, FillRow) {
   su::BoardRow numbers;
-  iota(numbers.begin(), numbers.end(), 1);
+  std::iota(numbers.begin(), numbers.end(), 1);
 
   auto res = su::fillRow("1 2 3 4 5 6 7 8 9");
   EXPECT_THAT(res, ::testing::ContainerEq(numbers));
