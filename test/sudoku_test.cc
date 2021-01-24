@@ -17,16 +17,20 @@ TEST(Sudoku, ValidInRowCol) {
 
   su::Board board = su::readFile(file_path);
 
-  std::cout << board;
-  ASSERT_TRUE(isValidInRow(board[1], 3));
-  ASSERT_FALSE(isValidInRow(board[2], 9));
-  ASSERT_TRUE(isValidInRow(board[2], 5));
+  std::size_t row_idx = 1;
+  ASSERT_TRUE(isValidInRow(board[row_idx], 3));
+  row_idx = 2;
+  ASSERT_FALSE(isValidInRow(board[row_idx], 9));
+  ASSERT_TRUE(isValidInRow(board[row_idx], 5));
 
-  ASSERT_FALSE(isValidInCol(board, 3, 8));
-  ASSERT_TRUE(isValidInCol(board, 3, 5));
+  row_idx = 3;
+  std::size_t col_idx = 3;
+  ASSERT_FALSE(isValidInCol(board, col_idx, 8));
+  ASSERT_TRUE(isValidInCol(board, col_idx, 5));
 
-  ASSERT_FALSE(isValidInSquare(board, 4, 4, 8));
-  ASSERT_TRUE(isValidInSquare(board, 4, 4, 5));
+  row_idx = col_idx = 4;
+  ASSERT_FALSE(isValidInSquare(board, row_idx, col_idx, 8));
+  ASSERT_TRUE(isValidInSquare(board, row_idx, col_idx, 5));
 }
 }  // namespace su
 
