@@ -34,11 +34,10 @@ TEST(SudokuTest, FillRow) {
   EXPECT_THAT(res, ::testing::ContainerEq(numbers));
 }
 
-TEST(SudokuTest, LoadBoard) {
+TEST(SudokuTest, LoadBoard1) {
   auto curr_path = std::filesystem::current_path();
   auto file_path = curr_path.parent_path() / "test" / "sudoku_input_1.txt";
   auto board = su::readFile(file_path);
-  std::cout << board << "\n";
   su::BoardRow middle_row, last_row;
   std::fill(last_row.begin(), last_row.end(), 0);
   middle_row = last_row;
@@ -46,18 +45,26 @@ TEST(SudokuTest, LoadBoard) {
   last_row.back() = 5;
 
   // last row: : 0 0 0 0 0 0 0 0 5
-  // middle all zero:
+  // middle row all zero.
   EXPECT_THAT(board[su::SIZE / 2], ::testing::ContainerEq(middle_row));
+  EXPECT_THAT(board.back(), ::testing::ContainerEq(last_row));
+}
+
+TEST(SudokuTest, LoadBoard2) {
+  auto curr_path = std::filesystem::current_path();
+  auto file_path = curr_path.parent_path() / "test" / "sudoku_input_2.txt";
+  auto board = su::readFile(file_path);
+  su::BoardRow first_row{5, 3, 0, 0, 7, 0, 0, 0, 0};
+  su::BoardRow last_row{0, 0, 0, 0, 8, 0, 0, 7, 9};
+
+  EXPECT_THAT(board.front(), ::testing::ContainerEq(first_row));
   EXPECT_THAT(board.back(), ::testing::ContainerEq(last_row));
 }
 
 }  // namespace su
 
 int main(int argc, char** argv) {
-  std::cout << "argc: " << argc;
   testing::InitGoogleTest(&argc, argv);
-  std::cout << "argc: " << argc << " "
-            << "argv1 " << argv[0] << "\n";
 
   return RUN_ALL_TESTS();
 }
