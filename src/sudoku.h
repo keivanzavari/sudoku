@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include <iostream>
-#include <thread>
 
 #include "parser.h"
 #include "types.h"
