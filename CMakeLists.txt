@@ -2,6 +2,14 @@ cmake_minimum_required(VERSION 2.8.12)
 project(sudoku)
 set(CMAKE_CXX_STANDARD 20)
 
+find_package(OpenCV)
+find_package(OpenCV REQUIRED)
+find_package(PkgConfig REQUIRED)
+pkg_search_module(TESSERACT REQUIRED tesseract)
+pkg_search_module(LEPTONICA REQUIRED lept)
+include_directories(${OpenCV_INCLUDE_DIRS})
+include_directories(${TESSERACT_INCLUDE_DIRS})
+include_directories(${LEPTONICA_INCLUDE_DIRS})
 
 include_directories(src)
 
@@ -32,3 +40,12 @@ set_property(TARGET sudoku_test PROPERTY CXX_STANDARD 17)
 add_executable(backtracking_solver src/backtracking_solver.cc )
 target_link_libraries(backtracking_solver stdc++fs)
 set_property(TARGET backtracking_solver PROPERTY CXX_STANDARD 17)
+
+
+
+add_executable(test_ocr src/test_ocr.cc )
+target_link_libraries(test_ocr stdc++fs)
+set_property(TARGET test_ocr PROPERTY CXX_STANDARD 17)
+target_link_libraries(test_ocr ${OpenCV_LIBS})
+target_link_libraries(test_ocr ${TESSERACT_LIBRARIES})
+target_link_libraries(test_ocr ${LEPTONICA_LIBRARIES})
