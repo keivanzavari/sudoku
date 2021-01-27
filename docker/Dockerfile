@@ -21,9 +21,7 @@ RUN wget -q -O opencv-${OPENCV_VERSION}.tar.gz https://github.com/opencv/opencv/
     cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-${OPENCV_VERSION}/modules \
       -DBUILD_EXAMPLES=OFF -DINSTALL_TESTS=OFF -DBUILD_opencv_python2=OFF \
       -DBUILD_opencv_python3=ON -DPYTHON3_EXECUTABLE=/usr/bin/python3 \
-      -DENABLE_PRECOMPILED_HEADERS=OFF -DWITH_CUDA=ON .. \
-      -DOPENCV_GENERATE_PKGCONFIG=ON -DWITH_CUDNN=ON \
-      -DOPENCV_DNN_CUDA=ON && \
+      -DENABLE_PRECOMPILED_HEADERS=OFF .. -DOPENCV_GENERATE_PKGCONFIG=ON && \
     make && \
     make install && \
     cd / && \
