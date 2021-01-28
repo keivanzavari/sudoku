@@ -43,7 +43,7 @@ set_property(TARGET backtracking_solver PROPERTY CXX_STANDARD 17)
 
 
 
-add_executable(test_ocr src/test_ocr.cc )
+add_executable(test_ocr src/ocr/test_ocr.cc )
 target_link_libraries(test_ocr stdc++fs)
 set_property(TARGET test_ocr PROPERTY CXX_STANDARD 17)
 target_link_libraries(test_ocr ${OpenCV_LIBS})
