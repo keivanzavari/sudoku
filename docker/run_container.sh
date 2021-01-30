@@ -2,6 +2,19 @@
 
 IMAGE="tesseract-opencv"
 CONTAINER_NAME="tesseract-opncv-env"
+function create_container_prompt() {
+
+  read -p "Container already running (${CONTAINER_NAME}). Reuse running container? (Y/n)? " -r
+  echo # (optional) move to a new line
+
+  if [[ $REPLY =~ ^[Nn]$ ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+if create_container_prompt; then
 docker rm -f ${CONTAINER_NAME} &>/dev/null | true
 
 docker run -dti --init --privileged --net host --name ${CONTAINER_NAME} \
@@ -13,6 +26,11 @@ docker run -dti --init --privileged --net host --name ${CONTAINER_NAME} \
 	--volume /var/run/sshd:/var/run/sshd \
 	-e DISPLAY \
 	${IMAGE}
+else
+  echo "Reusing docker container ${CONTAINER_NAME}."
+  docker start ${CONTAINER_NAME}
+fi
 
+sleep 0.1
 docker exec -it ${CONTAINER_NAME} /bin/bash
 
