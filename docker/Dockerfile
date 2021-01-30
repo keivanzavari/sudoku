@@ -6,7 +6,7 @@ WORKDIR /
 ENV DEBIAN_FRONTEND="noninteractive"
 
 RUN apt-get update && apt-get install -y build-essential && \
-    apt-get install -y wget g++ make cmake vim git libgtk2.0-dev pkg-config \
+    apt-get install -y wget g++ make cmake vim tmux git libgtk2.0-dev pkg-config \
     libavcodec-dev libavformat-dev libswscale-dev && \
     apt-get install -y python3-dev python3-pip python3-numpy libtbb2 \
     libtbb-dev libjpeg-dev libpng-dev libtiff-dev libdc1394-22-dev \
@@ -30,13 +30,7 @@ RUN wget -q -O opencv-${OPENCV_VERSION}.tar.gz https://github.com/opencv/opencv/
     rm  -rf opencv-${OPENCV_VERSION}.tar.gz opencv_contrib-${OPENCV_VERSION}.tar.gz opencv-${OPENCV_VERSION} opencv_contrib-${OPENCV_VERSION}
 
 
-RUN apt-get install -y automake ca-certificates libtool autoconf zlib1g-dev libleptonica-dev
+RUN apt-get install -y automake ca-certificates libtool autoconf zlib1g-dev libleptonica-dev libtesseract-dev
 
-ARG TESSERACT_VERSION=4.1.1
-RUN wget -q -O tesseract-${TESSERACT_VERSION}.tar.gz https://github.com/tesseract-ocr/tesseract/archive/${TESSERACT_VERSION}.tar.gz && \
-    tar -xvf tesseract-${TESSERACT_VERSION}.tar.gz && \
-    cd /tesseract-${TESSERACT_VERSION} && ./autogen.sh && ./configure --prefix=/usr/local/ && make && make install && ldconfig && \
-    cd / && rm  -rf tesseract-${TESSERACT_VERSION}.tar.gz tesseract-${TESSERACT_VERSION}.tar.gz
-
-
+WORKDIR /home
 CMD ["/bin/bash"]
