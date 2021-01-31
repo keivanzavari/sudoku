@@ -31,6 +31,7 @@ RUN wget -q -O opencv-${OPENCV_VERSION}.tar.gz https://github.com/opencv/opencv/
 
 
 RUN apt-get install -y automake ca-certificates libtool autoconf zlib1g-dev libleptonica-dev libtesseract-dev
+RUN cd /home && wget -q https://github.com/tesseract-ocr/tessdata/raw/master/eng.traineddata
 
 WORKDIR /home
 CMD ["/bin/bash"]

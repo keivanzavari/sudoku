@@ -42,8 +42,7 @@ add_executable(backtracking_solver src/backtracking_solver.cc )
 target_link_libraries(backtracking_solver stdc++fs)
 set_property(TARGET backtracking_solver PROPERTY CXX_STANDARD 17)
 
-
-
-add_executable(test_ocr src/ocr/test_ocr.cc )
-target_link_libraries(test_ocr ${OpenCV_LIBS} Tesseract::libtesseract stdc++fs)
-target_link_libraries(test_ocr )
+add_executable(test_ocr test/ocr/test_ocr.cc )
+target_link_libraries(test_ocr ${OpenCV_LIBS} Tesseract::libtesseract stdc++fs gtest gtest_main)
+add_test( test_ocr test_ocr)
+set_property(TARGET test_ocr PROPERTY CXX_STANDARD 17)
