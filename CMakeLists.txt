@@ -1,8 +1,17 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(sudoku)
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
 
+find_package(Tesseract 4)
+if (NOT Tesseract_FOUND)
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(Tesseract REQUIRED IMPORTED_TARGET GLOBAL tesseract lept)
+    add_library(Tesseract::libtesseract ALIAS PkgConfig::Tesseract)
+endif ()
 include_directories(src)
 
 add_subdirectory(googletest)
@@ -32,3 +41,9 @@ set_property(TARGET sudoku_test PROPERTY CXX_STANDARD 17)
 add_executable(backtracking_solver src/backtracking_solver.cc )
 target_link_libraries(backtracking_solver stdc++fs)
 set_property(TARGET backtracking_solver PROPERTY CXX_STANDARD 17)
+
+
+
+add_executable(test_ocr src/ocr/test_ocr.cc )
+target_link_libraries(test_ocr ${OpenCV_LIBS} Tesseract::libtesseract stdc++fs)
+target_link_libraries(test_ocr )

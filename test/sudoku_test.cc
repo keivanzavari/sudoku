@@ -1,10 +1,10 @@
-#include "sudoku.h"
 
 #include <gtest/gtest.h>
 
 #include <filesystem>
 
 #include "parser.h"
+#include "sudoku.h"
 // #include <string>
 // #include <vector>
 
