@@ -49,12 +49,13 @@ TEST(OCR, DrawnImage) {
   // Initialize tesseract-ocr with English, without specifying tessdata path
   EXPECT_TRUE(api->SetVariable("classify_bln_numeric_mode", "1"));  // to set numeric-only mode.
   api->SetVariable("tessedit_char_blacklist", "OSxyz");
+  api->SetVariable("tessedit_char_whitelist", "0123456789");
 
   if (api->Init(NULL, "eng")) {
     fprintf(stderr, "Could not initialize tesseract.\n");
     exit(1);
   }
-  std::array<int, 10> numbers;
+  std::array<int, 20> numbers;
   std::iota(numbers.begin(), numbers.end(), 0);
 
   for (const auto number : numbers) {
@@ -69,6 +70,7 @@ TEST(OCR, DrawnImage) {
     out_text.erase(std::remove(out_text.begin(), out_text.end(), '\n'), out_text.end());
 
     EXPECT_EQ(out_text, std::to_string(number));
+    api->Clear();
   }
   api->End();
 }
