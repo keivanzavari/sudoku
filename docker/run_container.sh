@@ -14,7 +14,7 @@ function create_container_prompt() {
   fi
 }
 
-if create_container_prompt; then
+if [[ ! $(docker ps -f "name=${CONTAINER_NAME}" --format '{{.Names}}') == ${CONTAINER_NAME} ]] || create_container_prompt; then
 docker rm -f ${CONTAINER_NAME} &>/dev/null | true
 
 docker run -dti --init --privileged --net host --name ${CONTAINER_NAME} \
