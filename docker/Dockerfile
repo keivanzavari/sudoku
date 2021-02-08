@@ -41,6 +41,9 @@ RUN adduser ${user_name} && \
     echo "${user_name} ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/${user_name} && \
     chmod 0440 /etc/sudoers.d/${user_name}
 
+
+USER ${user_name}
+ENV USER=${user_name}
 WORKDIR /home/${user_name}
 
 CMD ["/bin/bash"]
