@@ -18,9 +18,9 @@ if [[ ! $(docker ps -f "name=${CONTAINER_NAME}" --format '{{.Names}}') == ${CONT
   docker rm -f ${CONTAINER_NAME} &>/dev/null | true
 
   docker run -dti --init --privileged --net host --name ${CONTAINER_NAME} \
-        --mount type=bind,source=/home/keivan/playground/sudoku,target=/home/sudoku \
-    --volume /home/${LOGNAME}/.Xauthority:/home/sv/.Xauthority \
-    --volume /home/${LOGNAME}/.ssh:/home/sv/.ssh \
+    --mount type=bind,source=/home/keivan/playground/sudoku,target=/home/root/sudoku \
+    --volume /home/${LOGNAME}/.Xauthority:/home/root/.Xauthority \
+    --volume /home/${LOGNAME}/.ssh:/home/root/.ssh \
     --volume /tmp/.X11-unix:/tmp/.X11-unix \
     --volume /var/run/docker.sock:/var/run/docker.sock \
     --volume /var/run/sshd:/var/run/sshd \
@@ -34,4 +34,3 @@ fi
 
 sleep 0.1
 docker exec -it ${CONTAINER_NAME} /bin/bash
-
