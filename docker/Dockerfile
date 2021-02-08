@@ -33,5 +33,13 @@ RUN wget -q -O opencv-${OPENCV_VERSION}.tar.gz https://github.com/opencv/opencv/
 RUN apt-get install -y automake ca-certificates libtool autoconf zlib1g-dev libleptonica-dev libtesseract-dev
 RUN cd /home && wget -q https://github.com/tesseract-ocr/tessdata/raw/master/eng.traineddata
 
-WORKDIR /home/root
+ARG user_name=user
+ENV USER=${user_name}
+RUN adduser ${user_name} \
+  && usermod -aG sudo,video,dialout ${user_name} \
+  && echo "${user_name} ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/${user_name} \
+  && chmod 0440 /etc/sudoers.d/${user_name}
+
+WORKDIR /home/${user_name}
+
 CMD ["/bin/bash"]
