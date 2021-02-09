@@ -5,10 +5,10 @@ WORKDIR /
 
 ENV DEBIAN_FRONTEND="noninteractive"
 
-RUN apt-get update && apt-get install -y build-essential && \
-    apt-get install -y wget g++ make cmake vim tmux git libgtk2.0-dev pkg-config \
-    libavcodec-dev libavformat-dev libswscale-dev && \
-    apt-get install -y python3-dev python3-pip python3-numpy libtbb2 \
+RUN apt-get update && apt-get install -y build-essential xauth x11-apps \
+    wget g++ make cmake vim tmux git libgtk2.0-dev pkg-config \
+    libavcodec-dev libavformat-dev libswscale-dev \
+    python3-dev python3-pip python3-numpy libtbb2 \
     libtbb-dev libjpeg-dev libpng-dev libtiff-dev libdc1394-22-dev \
     && apt-get clean && rm -rf /var/lib/apt-lists/*
 
@@ -33,5 +33,17 @@ RUN wget -q -O opencv-${OPENCV_VERSION}.tar.gz https://github.com/opencv/opencv/
 RUN apt-get install -y automake ca-certificates libtool autoconf zlib1g-dev libleptonica-dev libtesseract-dev
 RUN cd /home && wget -q https://github.com/tesseract-ocr/tessdata/raw/master/eng.traineddata
 
-WORKDIR /home/root
+ARG user_name
+ENV USER=${user_name}
+RUN adduser ${user_name} && \
+    usermod -aG sudo,video,dialout ${user_name} && \
+    mkdir -p /etc/sudoers.d && \
+    echo "${user_name} ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/${user_name} && \
+    chmod 0440 /etc/sudoers.d/${user_name}
+
+
+USER ${user_name}
+ENV USER=${user_name}
+WORKDIR /home/${user_name}
+
 CMD ["/bin/bash"]
