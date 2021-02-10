@@ -5,7 +5,7 @@ WORKDIR /
 
 ENV DEBIAN_FRONTEND="noninteractive"
 
-RUN apt-get update && apt-get install -y build-essential xauth x11-apps \
+RUN apt-get update && apt-get install -y build-essential xauth x11-apps sudo \
     wget g++ make cmake vim tmux git libgtk2.0-dev pkg-config \
     libavcodec-dev libavformat-dev libswscale-dev \
     python3-dev python3-pip python3-numpy libtbb2 \
@@ -41,6 +41,9 @@ RUN adduser ${user_name} && \
     echo "${user_name} ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/${user_name} && \
     chmod 0440 /etc/sudoers.d/${user_name}
 
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/bin/bash","/usr/local/bin/entrypoint.sh"]
 
 USER ${user_name}
 ENV USER=${user_name}
