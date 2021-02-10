@@ -46,3 +46,9 @@ add_executable(test_ocr test/ocr/test_ocr.cc )
 target_link_libraries(test_ocr ${OpenCV_LIBS} Tesseract::libtesseract stdc++fs gtest gtest_main)
 add_test( test_ocr test_ocr)
 set_property(TARGET test_ocr PROPERTY CXX_STANDARD 17)
+
+
+
+add_executable(test_find_corners test/test_find_corners.cc )
+target_link_libraries(test_find_corners ${OpenCV_LIBS} stdc++fs)
+set_property(TARGET test_find_corners PROPERTY CXX_STANDARD 17)
